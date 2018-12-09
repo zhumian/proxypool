@@ -42,24 +42,24 @@ class WebRequest(object):
                   }
         return header
 
-    def get(self, url, header=None, timeout=30, retry_time=5, retry_interval=5, retry_flag=list(), **kwargs):
+    def get(self, url, header=None, proxies=None, timeout=30, retry_time=5, retry_interval=5, retry_flag=list(), **kwargs):
         headers = self.header
         if header and isinstance(header, dict):
             headers.update(header)
         while True:
             try:
-                html = requests.get(url, headers=headers, timeout=timeout, **kwargs)
-                if any(f in html.content for f in retry_flag):
+                response = requests.get(url, headers=headers, proxies=proxies, timeout=timeout, **kwargs)
+                if any(f in response.content for f in retry_flag):
                     raise Exception
-                return html
+                return response
             except Exception as e:
                 logging.error(e)
                 retry_time -= 1
                 if retry_time == 0:
                     response = Response()
-                    response.status_code = 200
+                    response.status_code = 403
                     return response
-                time.sleep(retry_interval)
+
 
 
 

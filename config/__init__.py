@@ -11,5 +11,18 @@ def proxy(key):
     return cp.get("proxy_url", key)
 
 
+def proxy_methods():
+    return cp.options("methods")
+
+
+def RedisConfig(key):
+    return cp.get("redis", key)
+
+
+def FlaskConfig(key):
+    return cp.get("flask", key)
+
+
+
 if __name__ == '__main__':
     pass
