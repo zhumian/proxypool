@@ -7,11 +7,16 @@ pm = ProxyManager()
 
 
 @app.route("/<type>/get")
-def get_http(type):
+def get(type):
     if type:
         proxy = pm.get(type)
         return proxy.decode("utf-8") if proxy else "no useful proxy"
 
+
+@app.route("/info")
+def info():
+    return jsonify(pm.info()
+                   )
 
 
 def run():

@@ -38,6 +38,9 @@ class RedisClient(object):
     def delete(self):
         return self.conn.delete(self.name)
 
+    def scard(self):
+        return self.conn.scard(self.name)
+
 
 if __name__ == '__main__':
     https_raw_db = RedisClient("https_raw_proxy")

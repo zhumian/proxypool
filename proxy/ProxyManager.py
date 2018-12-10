@@ -35,6 +35,18 @@ class ProxyManager(object):
                 return self.useful_https_db.sget()
             elif type == "http":
                 return self.useful_http_db.sget()
+
+    def info(self):
+        raw_https_proxy = self.raw_https_db.scard()
+        raw_http_proxy = self.raw_http_db.scard()
+        useful_https_proxy = self.useful_https_db.scard()
+        useful_http_proxy = self.useful_http_db.scard()
+        return {
+            "raw_https_proxy": raw_https_proxy,
+            "raw_http_proxy": raw_http_proxy,
+            "useful_https_proxy": useful_https_proxy,
+            "useful_http_proxy": useful_http_proxy
+        }
                 
 
 if __name__ == '__main__':

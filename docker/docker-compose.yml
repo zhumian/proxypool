@@ -1,0 +1,14 @@
+version: "2"
+services:
+  proxypool:
+    volumes:
+      - ..:/usr/workspace/proxypool
+    ports:
+      - 8081:8080
+    links:
+      - proxy_redis
+    image: "proxypool"
+  proxy_redis:
+    ports:
+      - "6379:6379"
+    image : "redis"
