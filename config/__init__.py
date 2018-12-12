@@ -3,7 +3,7 @@ import os
 
 cp = ConfigParser()
 path = os.path.dirname(os.path.realpath(__file__))
-file = path + os.sep + "Proxy.ini"
+file = path + os.sep + "config.ini"
 cp.read(file)
 
 

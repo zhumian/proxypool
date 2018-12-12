@@ -50,7 +50,7 @@ def start():
 
 def run():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(start, "interval", minutes=10, id="validateProxy")
+    scheduler.add_job(start, "interval", minutes=10, name="validateProxy")
     scheduler.start()
 
     start()

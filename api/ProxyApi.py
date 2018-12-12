@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
-from proxy.ProxyManager import  ProxyManager
+from flask import Flask, jsonify
+
 from config import FlaskConfig
+from proxy.ProxyManager import ProxyManager
 
 app = Flask(__name__)
 pm = ProxyManager()
@@ -15,8 +16,7 @@ def get(type):
 
 @app.route("/info")
 def info():
-    return jsonify(pm.info()
-                   )
+    return jsonify(pm.info())
 
 
 def run():

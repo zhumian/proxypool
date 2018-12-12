@@ -3,12 +3,16 @@ services:
   proxypool:
     volumes:
       - ..:/usr/workspace/proxypool
+      # 挂载宿主机日期文件到容器中，使时间同步
+      - /etc/localtime:/etc/localtime
     ports:
-      - 8081:8080
+      - 9000:9000
     links:
       - proxy_redis
-    image: "proxypool"
+    image: "proxypool:1.0"
   proxy_redis:
+    volumes:
+     - /etc/localtime:/etc/localtime
     ports:
       - "6379:6379"
     image : "redis"

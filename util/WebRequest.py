@@ -1,7 +1,6 @@
-import requests
 import random
-import logging
-import time
+
+import requests
 from requests.models import Response
 
 
@@ -53,7 +52,6 @@ class WebRequest(object):
                     raise Exception
                 return response
             except Exception as e:
-                logging.error(e)
                 retry_time -= 1
                 if retry_time == 0:
                     response = Response()

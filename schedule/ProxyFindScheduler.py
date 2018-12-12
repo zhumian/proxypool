@@ -11,7 +11,7 @@ def findProxy():
 
 def run():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(findProxy, "interval", minutes=10, id="findProxy")
+    scheduler.add_job(findProxy, "interval", minutes=10, name='findProxy')
     scheduler.start()
 
     findProxy()

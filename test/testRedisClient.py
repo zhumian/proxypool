@@ -23,8 +23,8 @@ def raw_http():
 
 
 def delete():
-    # useful_http_db.delete()
-    # useful_https_db.delete()
+    useful_http_db.delete()
+    useful_https_db.delete()
     raw_http_db.delete()
     raw_https_db.delete()
 
@@ -38,4 +38,4 @@ def get(type):
 
 
 if __name__ == '__main__':
-   print(get("http"))
+    delete()

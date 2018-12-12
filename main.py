@@ -4,7 +4,8 @@ from schedule.ProxyFindScheduler import run as ProxyFindScheduler
 from api.ProxyApi import run as ProxyApi
 import logging
 
-logging.basicConfig(level=logging.INFO)
+format = "%(asctime)s - [%(levelname)s] - [%(funcName)s] - %(message)s"
+logging.basicConfig(level=logging.INFO, format=format)
 
 
 def run():

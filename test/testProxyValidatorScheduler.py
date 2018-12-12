@@ -3,6 +3,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
+
 def run():
     p = ProxyValidatorScheduler()
     p.load()
