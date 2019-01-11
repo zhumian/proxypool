@@ -1,41 +1,63 @@
-import logging, json
+import logging
 
-from util.WebRequest import WebRequest
+import requests
+
+import config
 from db.Redis import RedisClient
 
 useful_https_db = RedisClient("useful_https_proxy")
 useful_http_db = RedisClient("useful_http_proxy")
+requests.packages.urllib3.disable_warnings()
 
 
-def httpsValidator(proxies):
-    target = "https://httpbin.org/ip"
+def rawHttpsValidator(proxies):
+    target = config.ip("https_url")
     for proxy in proxies:
         proxy = proxy.decode("utf-8")
         if validate(proxy=proxy, type="https", target=target):
             useful_https_db.sadd(proxy)
 
 
-def httpValidator(proxies):
-    target = "http://httpbin.org/ip"
+def rawHttpValidator(proxies):
+    target = config.ip("http_url")
     for proxy in proxies:
         proxy = proxy.decode("utf-8")
         if validate(proxy=proxy, type="http", target=target):
             useful_http_db.sadd(proxy)
 
 
+def usefulHttpsValidator(proxies):
+    target = config.ip("https_url")
+    for proxy in proxies:
+        proxy = proxy.decode("utf-8")
+        if not validate(proxy=proxy, type="https", target=target):
+            useful_https_db.scard(proxy)
+
+
+def usefulHttpValidator(proxies):
+    target = config.ip("http_url")
+    for proxy in proxies:
+        proxy = proxy.decode("utf-8")
+        if not validate(proxy=proxy, type="http", target=target):
+            useful_http_db.scard(proxy)
+
+
 def validate(proxy, type, target):
     proxies = {
-        type: "{type}://{url}".format(type=type, url=proxy)
+        type: "{type}://{proxy}".format(proxy=proxy, type=type)
     }
-    wr = WebRequest()
     try:
-        res = wr.get(url=target, proxies=proxies, retry_time=1, timeout=10)
-        if res.status_code == 200:
-            result_url = json.loads(res.content)['origin']
-            if proxy.split(":")[0] == result_url:
-                logging.info("url:{url}  proxy:{proxy}".format(url=result_url, proxy=proxy.split(":")[0]))
+        response = requests.get(target, proxies=proxies, verify=False)
+        if response.status_code == 200:
+            content = str(response.content, encoding="utf-8")
+            logging.info("content : " + content)
+            if proxy.split(":")[0] == content:
+                logging.info("result:{result}  proxy:{proxy}".format(result=content, proxy=proxy.split(":")[0]))
                 logging.info("[{type}] [{proxy}] validate pass".format(type=type, proxy=proxy))
                 return True
+        elif response.status_code == 403:
+            logging.info("[{type}] [{proxy}] validate fail : 403 forbidden".format(type=type, proxy=proxy))
+            return False
     except Exception as e:
         logging.info("[{type}] [{proxy}] validate fail".format(type=type, proxy=proxy))
         return False

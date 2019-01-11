@@ -23,6 +23,10 @@ def FlaskConfig(key):
     return cp.get("flask", key)
 
 
+def ip(key):
+    return cp.get("ip", key)
+
+
 
 if __name__ == '__main__':
     pass

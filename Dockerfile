@@ -1,5 +1,5 @@
 FROM python:3.7
-LABEL proxypool=1.0
+LABEL proxypool=1.1
 MAINTAINER zhumian liuchikit@foxmail.com
 
 # 指定时区，使docker容器与宿主机时间同步

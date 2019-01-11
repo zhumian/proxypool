@@ -8,6 +8,7 @@ class RedisClient(object):
         self.name = name
         host = RedisConfig("host")
         port = RedisConfig("port")
+        password = RedisConfig("password")
         self.conn = redis.Redis(host=host, port=port, db=0)
 
     def hset(self, value):

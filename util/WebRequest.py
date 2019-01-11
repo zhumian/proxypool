@@ -41,10 +41,7 @@ class WebRequest(object):
                   }
         return header
 
-    def get(self, url, header=None, proxies=None, timeout=30, retry_time=5, retry_interval=5, retry_flag=list(), **kwargs):
-        headers = self.header
-        if header and isinstance(header, dict):
-            headers.update(header)
+    def get(self, url, headers=None, proxies=None, timeout=30, retry_time=5, retry_interval=5, retry_flag=list(), **kwargs):
         while True:
             try:
                 response = requests.get(url, headers=headers, proxies=proxies, timeout=timeout, **kwargs)
