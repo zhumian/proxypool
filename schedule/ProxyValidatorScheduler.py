@@ -86,7 +86,7 @@ def useful_start():
 
 def run():
     scheduler = BackgroundScheduler()
-    scheduler.add_job(raw_start, "interval", minutes=1, name="validateRawProxy")
+    scheduler.add_job(raw_start, "interval", minutes=10, name="validateRawProxy")
     scheduler.add_job(useful_start, "interval", minutes=30, name="validateUsefulProxy")
     scheduler.start()
 

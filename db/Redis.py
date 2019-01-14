@@ -38,8 +38,8 @@ class RedisClient(object):
     def delete(self):
         return self.conn.delete(self.name)
 
-    def scard(self):
-        return self.conn.scard(self.name)
+    def srem(self, value):
+        return self.conn.srem(self.name, value)
 
 
 if __name__ == '__main__':

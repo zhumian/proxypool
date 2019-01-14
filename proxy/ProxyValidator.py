@@ -31,7 +31,7 @@ def usefulHttpsValidator(proxies):
     for proxy in proxies:
         proxy = proxy.decode("utf-8")
         if not validate(proxy=proxy, type="https", target=target):
-            useful_https_db.scard(proxy)
+            useful_https_db.srem(proxy)
 
 
 def usefulHttpValidator(proxies):
@@ -39,7 +39,7 @@ def usefulHttpValidator(proxies):
     for proxy in proxies:
         proxy = proxy.decode("utf-8")
         if not validate(proxy=proxy, type="http", target=target):
-            useful_http_db.scard(proxy)
+            useful_http_db.srem(proxy)
 
 
 def validate(proxy, type, target):
@@ -50,7 +50,6 @@ def validate(proxy, type, target):
         response = requests.get(target, proxies=proxies, verify=False)
         if response.status_code == 200:
             content = str(response.content, encoding="utf-8")
-            logging.info("content : " + content)
             if proxy.split(":")[0] == content:
                 logging.info("result:{result}  proxy:{proxy}".format(result=content, proxy=proxy.split(":")[0]))
                 logging.info("[{type}] [{proxy}] validate pass".format(type=type, proxy=proxy))
